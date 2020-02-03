@@ -13,7 +13,7 @@ function Products({ products, handleAddToCart }) {
                     {product.name}
                 </p>
                 <p>
-                    {proudct.price}
+                    {product.price}
                 </p>
                 <button
                     onClick={handleAddToCart}

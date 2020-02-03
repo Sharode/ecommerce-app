@@ -4,12 +4,10 @@ import Products from './ components/Products'
 import Filter from './ components/Filter';
 
 function App() {
-  const [products, SetProducts] = useState([])
-  const [filteredProducts, SetFilteredProducts] = useState([])
-  const [filtering, SetFiltering] = useState({
-    sort: ''
-
-  })
+  const [products, setProducts] = useState([])
+  const [filteredProducts, setFilteredProducts] = useState([])
+  const [sorting, setSort] = useState('')
+  const [size, setSize] = useState()
 
   useEffect(() => {
     async function dataApi() {
@@ -17,9 +15,8 @@ function App() {
       try {
         const res = await fetch(url)
         const data = await res.json()
-        SetProducts(data)
-        SetFilteredProducts(data)
-        console.log(data)
+        setProducts(data)
+        setFilteredProducts(data)
       } catch (error) {
         console.log(error)
       }
@@ -27,25 +24,43 @@ function App() {
     }
     dataApi()
   }, [])
+
   const handAddToCart = () => {
     console.log('okay')
   }
-  const handleChangeSize = () => {
-    console.log('okay')
-  }
   const handleChangeSort = (e) => {
-    SetFiltering(...filtering, { sort: e.target.value })
-    console.log{ 'oaky' }
+    setSort(e.target.value)
+    listProducts()
+
+  }
+  const handleChangeSize = (e) => {
+    // SetFiltering(filtering => sorting: e.target.value)
+    console.log('okay')
   }
   const listProducts = () => {
+    if (!sorting) {
+      products.sort((a, b) => (
+        (sorting === 'lowest') ? (a.price < b.price ? 1 : -1) : (a.price > b.price ? 1 : -1)
+      ))
+    } else {
+      products.sort((a, b) => (a.id < b.id ? 1 : -1))
+    }
+    //might need a return here
+    return setFilteredProducts(products)
     console.log('okay')
   }
+
   return (
     <div className="container">
       <h1>Ecommerce Shopping Cart Application</h1>
       <hr />
       <div className="one-column">
-        <Filter size={size} sort={sort} handleChangeSize={handleChangeSize} handleChangeSort={handleChangeSort} count={filteredProducts.length} />
+        <Filter
+          size={size}
+          sort={sorting}
+          handleChangeSize={(e) => handleChangeSize(e)}
+          handleChangeSort={handleChangeSort}
+          count={filteredProducts.length} />
         <Products products={filteredProducts} handleAddToCart={handAddToCart} />
       </div>
     </div>
