@@ -21,23 +21,31 @@ function App() {
       } catch (error) {
         console.log(error)
       }
-
     }
     dataApi()
+
+    if (localStorage.getItem('cartItems')) {
+      setCartItems(JSON.parse(localStorage.getItem('cartItems')))
+    }
   }, [])
 
   const handAddToCart = (e, product) => {
 
     if (cartItems.length === 0) {
+      product.count = 1
       setCartItems([product])
     } else {
-      console.log(cartItems)
       const isInCart = cartItems.filter(item => item.added === product.added)
-      console.log(isInCart)
       if (isInCart.length === 0) {
+        product.count = 1
         setCartItems(prevState => [...prevState, product])
+      } else {
+        product.count++
+        setCartItems(prevState => [...prevState])
       }
     }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
   }
 
@@ -58,8 +66,10 @@ function App() {
     //might need a return here
     return setFilteredProducts(products)
   }
-  const handleRemoveFromCart = () => {
-
+  const handleRemoveFromCart = (e, item) => {
+    const newCartItems = cartItems.filter(elem => elem.added !== item.added)
+    localStorage.setItem('cartItems', JSON.stringify(newCartItems))
+    setCartItems(newCartItems)
   }
 
   return (
