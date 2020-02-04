@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function Filter({ count, sort, handleChangeSort, handleChangeSize }) {
+function Filter({ count, sort, handleChangeSort }) {
     return (
         <div>
             <div>
@@ -14,11 +14,10 @@ function Filter({ count, sort, handleChangeSort, handleChangeSize }) {
                         <option value="">Select</option>
                         <option value="lowest">Lowest to Highest</option>
                         <option value="highest">Highest to Lowest</option>
-
                     </select>
                 </label>
             </div>
-            <div></div>
+
 
         </div>
     )

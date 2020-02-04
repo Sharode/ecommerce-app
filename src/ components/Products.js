@@ -6,8 +6,8 @@ function Products({ products, handleAddToCart }) {
     const productItems = products.map(product => (
         <div key={product.added}>
             <div>
-                <a href="" onClick={handleAddToCart}>
-                    <img src={`../../public/products/${product.productImg}`} alt={product.name} />
+                <a href={`#${product.added}`} onClick={(e) => handleAddToCart(e, product)}>
+                    {/* <img src={`../../public/products/${product.productImg}`} alt={product.name} /> */}
                 </a>
                 <p>
                     {product.name}
@@ -16,7 +16,7 @@ function Products({ products, handleAddToCart }) {
                     {product.price}
                 </p>
                 <button
-                    onClick={handleAddToCart}
+                    onClick={(e) => handleAddToCart(e, product)}
                 >
                     Add to Cart
                 </button>

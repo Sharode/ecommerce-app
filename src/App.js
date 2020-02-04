@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Products from './ components/Products'
 import Filter from './ components/Filter';
+import Basket from './ components/Basket';
 
 function App() {
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const [sorting, setSort] = useState('')
-  const [size, setSize] = useState()
+  const [cartItems, setCartItems] = useState([])
 
   useEffect(() => {
     async function dataApi() {
@@ -25,18 +26,26 @@ function App() {
     dataApi()
   }, [])
 
-  const handAddToCart = () => {
-    console.log('okay')
+  const handAddToCart = (e, product) => {
+
+    if (cartItems.length === 0) {
+      setCartItems([product])
+    } else {
+      console.log(cartItems)
+      const isInCart = cartItems.filter(item => item.added === product.added)
+      console.log(isInCart)
+      if (isInCart.length === 0) {
+        setCartItems(prevState => [...prevState, product])
+      }
+    }
+
   }
+
   const handleChangeSort = (e) => {
     setSort(e.target.value)
     listProducts()
+  }
 
-  }
-  const handleChangeSize = (e) => {
-    // SetFiltering(filtering => sorting: e.target.value)
-    console.log('okay')
-  }
   const listProducts = () => {
     if (!sorting) {
       products.sort((a, b) => (
@@ -45,26 +54,37 @@ function App() {
     } else {
       products.sort((a, b) => (a.id < b.id ? 1 : -1))
     }
+
     //might need a return here
     return setFilteredProducts(products)
-    console.log('okay')
+  }
+  const handleRemoveFromCart = () => {
+
   }
 
   return (
     <div className="container">
       <h1>Ecommerce Shopping Cart Application</h1>
       <hr />
-      <div className="one-column">
-        <Filter
-          size={size}
-          sort={sorting}
-          handleChangeSize={(e) => handleChangeSize(e)}
-          handleChangeSort={handleChangeSort}
-          count={filteredProducts.length} />
-        <Products products={filteredProducts} handleAddToCart={handAddToCart} />
+      <div style={{ display: "flex" }}>
+        <div className="one-column">
+          <Filter
+            sort={sorting}
+            handleChangeSort={handleChangeSort}
+            count={filteredProducts.length}
+          />
+          <Products products={filteredProducts} handleAddToCart={handAddToCart} />
+        </div>
+        <div className="two-column">
+          <Basket cartItems={cartItems} handleRemoveFromCart={handleRemoveFromCart} />
+        </div>
       </div>
+
     </div>
   );
 }
+
+
+
 
 export default App;
