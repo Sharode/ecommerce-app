@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import Products from './ components/Products'
 import Filter from './ components/Filter';
 import Basket from './ components/Basket';
 
 function App() {
 
-
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
-  const [sorting, setSorting] = useState('default')
+  const [sorting, setSorting] = useState("default")
   const [cartItems, setCartItems] = useState([])
   const [productType, setProductType] = useState('All')
 
@@ -34,21 +32,20 @@ function App() {
 
   const listProducts = () => {
     if (sorting === 'lowest') {
-      products.sort((a, b) => ((a.price > b.price ? 1 : -1)
-      ))
+      products.sort((a, b) => ((a.price - b.price)))
+
     } else if (sorting === 'highest') {
-      products.sort((a, b) => (a.id < b.id ? 1 : -1))
+      products.sort((a, b) => (b.price - a.price))
     }
 
     if (productType !== 'All') {
       console.log(productType)
-      let newProducts = products.filter(item => item.itemType.indexOf(productType) >= 0)
-      return setFilteredProducts(newProducts)
+      let newProducts = products.filter(item => item.itemType === productType)
+      setFilteredProducts(newProducts)
     }
 
     //might need a return here
-    // return this.setState({ filteredProducts: products })
-    return setFilteredProducts(products)
+    setFilteredProducts(products)
   }
 
   const addToLocalStorage = (product) => {
@@ -82,11 +79,9 @@ function App() {
       if (isInCart.length === 0) {
         product.count = 1
         setCartItems(prevState => [...prevState, product])
-        console.log('pow 2')
       } else {
         product.count++
         setCartItems(prevState => [...prevState])
-        console.log('pow 3')
       }
 
     }
@@ -94,13 +89,38 @@ function App() {
   }
 
   const handleChangeSort = (e) => {
-    setSorting(e.target.value)
-    listProducts()
+    const fp = products // copying products to filter
+    const { value } = e.target
+    setSorting(value)
+
+
+    //convert into a switch case
+
+    if (value === 'lowest') {
+      fp.sort((a, b) => ((a.price - b.price)))
+      setFilteredProducts(fp)
+
+    } else if (value === 'highest') {
+      fp.sort((a, b) => (b.price - a.price))
+      setFilteredProducts(fp)
+
+    }
+
+
   }
 
   const handleChangeProduct = (e) => {
     setProductType(e.target.value)
-    listProducts()
+    if (e.target.value !== 'All') {
+      console.log(productType)
+      const newProducts = products.filter(item => item.itemType === e.target.value)
+      console.log(products.length)
+      setFilteredProducts(newProducts)
+    } else {
+      setFilteredProducts(products)
+    }
+
+
 
   }
 
@@ -111,21 +131,31 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <h1>Ecommerce Shopping Cart Application</h1>
+    <div className="w-full bg-gray-200">
+      <h1 className="">Ecommerce Shopping Cart Application</h1>
       <hr />
-      <div style={{ display: "flex" }}>
-        <div className="one-column">
-          <Filter
-            sort={sorting}
-            productView={productType}
-            handleChangeSort={handleChangeSort}
-            handleChangeProduct={handleChangeProduct}
-            count={filteredProducts.length}
+      <div>
+        <Filter
+          sort={sorting}
+          productView={productType}
+          handleChangeSort={handleChangeSort}
+          handleChangeProduct={handleChangeProduct}
+          productFiltered={filteredProducts}
+          products={products}
+          count={filteredProducts.length}
+        />
+      </div>
+      <div className="flex">
+        <div className="w-4/5">
+          <Products
+            productItems={filteredProducts}
+            products={products}
+            productChange={productType}
+            sorts={sorting}
+            handleAddToCart={handAddToCart}
           />
-          <Products products={filteredProducts} handleAddToCart={handAddToCart} />
         </div>
-        <div className="two-column">
+        <div className="w-1/5">
           <Basket cartItems={cartItems} handleRemoveFromCart={handleRemoveFromCart} />
         </div>
       </div>
