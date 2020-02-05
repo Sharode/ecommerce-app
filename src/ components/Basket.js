@@ -1,4 +1,5 @@
 import React from 'react'
+import round100th from '../utils'
 
 function Basket({ cartItems, handleRemoveFromCart }) {
     return (
@@ -14,11 +15,12 @@ function Basket({ cartItems, handleRemoveFromCart }) {
                     {cartItems.map(item =>
                         <li>
                             <b>{item.name} </b>
-                            {item.count}
+                            {item.count} = {round100th(item.price * item.count)}
                             <button onClick={(e) => handleRemoveFromCart(e, item)}> x </button>
                         </li>
                     )}
                 </ul>
+                <p>Total Price  {Math.ceil(cartItems.reduce((a, c) => a + c.price * c.count, 0))}</p>
             </div>
         </div>
     )
