@@ -30,24 +30,6 @@ function App() {
     }
   }, [])
 
-  const listProducts = () => {
-    if (sorting === 'lowest') {
-      products.sort((a, b) => ((a.price - b.price)))
-
-    } else if (sorting === 'highest') {
-      products.sort((a, b) => (b.price - a.price))
-    }
-
-    if (productType !== 'All') {
-      console.log(productType)
-      let newProducts = products.filter(item => item.itemType === productType)
-      setFilteredProducts(newProducts)
-    }
-
-    //might need a return here
-    setFilteredProducts(products)
-  }
-
   const addToLocalStorage = (product) => {
     // to add to localStorage
     const itemsInCart = cartItems
@@ -131,10 +113,10 @@ function App() {
   }
 
   return (
-    <div className="w-full bg-gray-200">
+    <div className="w-full">
       <h1 className="">Ecommerce Shopping Cart Application</h1>
       <hr />
-      <div>
+      <section>
         <Filter
           sort={sorting}
           productView={productType}
@@ -144,9 +126,9 @@ function App() {
           products={products}
           count={filteredProducts.length}
         />
-      </div>
+      </section>
       <div className="flex">
-        <div className="w-4/5">
+        <div className={cartItems.length > 0 ? "w-2/3" : "w-full"} >
           <Products
             productItems={filteredProducts}
             products={products}
@@ -155,16 +137,18 @@ function App() {
             handleAddToCart={handAddToCart}
           />
         </div>
-        <div className="w-1/5">
+        {cartItems.length > 0 ? (<div className="w-1/3">
           <Basket cartItems={cartItems} handleRemoveFromCart={handleRemoveFromCart} />
-        </div>
+        </div>) : ""}
+
       </div>
 
     </div>
   );
 }
 
+export default App
 
 
 
-export default App;
+
