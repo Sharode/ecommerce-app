@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function Filter({ count, sorts, productView, handleChangeSort, handleChangeProduct, products, productFiltered }) {
+function Filter({ count, sorts, productType, handleChangeSort, handleChangeProduct, products, filteredProducts }) {
     return (
         <div>
             <div>
@@ -17,7 +17,7 @@ function Filter({ count, sorts, productView, handleChangeSort, handleChangeProdu
                     </select>
                 </label>
                 <label> Pick an item
-                    <select className="form-control" value={productView} onChange={handleChangeProduct}
+                    <select className="form-control" value={productType} onChange={handleChangeProduct}
                         name="" id="">
                         <option value="All">All</option>
                         <option value="mug">Mugs</option>
