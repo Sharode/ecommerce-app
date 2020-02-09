@@ -5,9 +5,9 @@ import Filter from '../ components/Filter';
 // import Basket from './ components/Basket';
 
 function Home({
-    products, filteredProducts, productType, sorted, handleChangeSort, handleChangeProduct, handleSelectProduct }) {
+    products, filteredProducts, productType, sorted, handleChangeSort, handleChangeProduct, handleSelectProduct, handleAddToCart }) {
     return (
-        <div className="w-full">
+        <div className="w-full px-2">
             <section className="flex justify-around bg-blue-100">
                 <p className="text-lg">Logo</p>
                 <p> Mens</p>
@@ -15,7 +15,7 @@ function Home({
                 <p>Cart</p>
             </section>
             <section className="flex">
-                <section className="md:w-1/3">
+                <section className="md:w-1/5">
                     <Filter
                         sorted={sorted}
                         productType={productType}
@@ -26,12 +26,13 @@ function Home({
                     // count={filteredProducts.length}
                     />
                 </section>
-                <section className="md:w-2/3">
+                <section className="md:w-4/5">
                     <div className="flex">
                         <Products
                             productItems={filteredProducts}
                             products={products}
                             handleSelectProduct={handleSelectProduct}
+                            handleAddToCart={handleAddToCart}
                         />
                     </div>
                 </section>

@@ -37,7 +37,7 @@ function DataStore() {
         const itemsInCart = cartItems
         let alreadyInCart = false;
         itemsInCart.forEach(item => {
-            if (item.added === product.added) {
+            if (item.id === product.id) {
                 alreadyInCart = true
                 item.count++
             }
@@ -51,7 +51,7 @@ function DataStore() {
     }
 
     const handleAddToCart = (e, product) => {
-
+        console.log(product)
         addToLocalStorage(product)
 
         //to add to local component state
@@ -59,7 +59,7 @@ function DataStore() {
             product.count = 1
             setCartItems([product])
         } else {
-            const isInCart = cartItems.filter(item => item.added === product.added)
+            const isInCart = cartItems.filter(item => item.id === product.id)
             if (isInCart.length === 0) {
                 product.count = 1
                 setCartItems(prevState => [...prevState, product])
@@ -109,7 +109,7 @@ function DataStore() {
     }
 
     const handleRemoveFromCart = (e, item) => {
-        const newCartItems = cartItems.filter(elem => elem.added !== item.added)
+        const newCartItems = cartItems.filter(elem => elem.id !== item.id)
         localStorage.setItem('cartItems', JSON.stringify(newCartItems))
         setCartItems(newCartItems)
     }
@@ -130,12 +130,16 @@ function DataStore() {
                         handleChangeSort={handleChangeSort}
                         handleChangeProduct={handleChangeProduct}
                         handleSelectProduct={handleSelectProduct}
+                        handleAddToCart={handleAddToCart}
+
                     />
                 </Route>
                 <Route exact path='/cart'>
                     <ShoppingCart
                         cartItems={cartItems}
                         handleRemoveFromCart={handleRemoveFromCart}
+                        handleAddToCart={handleAddToCart}
+
                     />
                 </Route>
                 <Route exact path='/product'>

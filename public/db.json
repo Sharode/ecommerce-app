@@ -87,7 +87,7 @@
             "price": 160,
             "name": "Nike Zoom X Vista Grind",
             "description": "The Nike Zoom X Vista Grind brings you to a bold new place both rebellious and refined. It's comfort you can see and feel in a brand new silhouette.",
-            "id": "CT8919-700",
+            "id": "CT8359-700",
             "itemType": "shoe"
         },
         {
@@ -129,7 +129,7 @@
             "price": 65,
             "name": "Nike Sportswear Essential",
             "description": "With a loose fit and dense fleece fabric, the Nike Sportswear Essential Hoodie is the cozy closet staple you can't wait to pull on, day or night.",
-            "id": "CT8919-700",
+            "id": "CT893249-700",
             "itemType": "Hoodie"
         },
         {
@@ -402,11 +402,32 @@
                 "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/40a13583-9117-4134-9c83-3c3766448edd/yin-yang-mens-basketball-t-shirt-PmLjn5.jpg",
                 "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/3c45de61-fd2f-48b0-ba27-3c821d64655f/yin-yang-mens-basketball-t-shirt-PmLjn5.jpg"
             ],
-            "price": 40,
-            "name": "Nike YIN YANG",
+            "price": 55,
+            "name": "Nike Sportswear",
             "description": "Inspired by the international culture of the game, the Nike Yin Yang T-Shirt is made with lightweight cotton for comfort.",
             "id": "647404304g",
             "itemType": "shirt"
+        },
+        {
+            "Size": [
+                "XS",
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "gender": "Men",
+            "imageUrl": [
+                "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/l2lgmlfqpnof27iknr7t/sportswear-mens-fleece-hoodie-L5tBq6.jpg",
+                "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/kmqt1iwiqjy40n5xqcpm/sportswear-mens-fleece-hoodie-L5tBq6.jpg",
+                "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/qvaexffmgquqrf8sy59y/sportswear-mens-fleece-hoodie-L5tBq6.jpg"
+            ],
+            "price": 35,
+            "name": "Nike Sportswear Essential",
+            "description": "The Nike Sportswear Hoodie is made with soft fleece to keep you warm and comfortable when you're on the move, and a screen-printed graphic calls out New York.",
+            "id": "BV61894367",
+            "itemType": "hoodie"
         }
     ]
 }
