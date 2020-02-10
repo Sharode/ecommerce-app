@@ -4,33 +4,40 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './Home'
 import Product from './Product';
 import ShoppingCart from './ShoppingCart';
+import Navbar from '../ components/Navbar';
 
 function DataStore() {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
-    const [sorting, setSorting] = useState("default")
+    const [sorting, setSorting] = useState("featured")
     const [cartItems, setCartItems] = useState([])
     const [productType, setProductType] = useState('All')
+    const [gender, SelectGender] = useState('')
     const [selectedProduct, setSelectedProduct] = useState([])
 
-    useEffect(() => {
-        async function dataApi() {
-            let url = 'http://localhost:8000/product'
-            try {
-                const res = await fetch(url)
-                const data = await res.json()
-                setProducts(data)
-                setFilteredProducts(data)
-            } catch (error) {
-                console.log(error)
-            }
+
+
+    const dataApi = async () => {
+        let url = 'http://localhost:8000/product'
+        try {
+            const res = await fetch(url)
+            const data = await res.json()
+            setProducts(data)
+            setFilteredProducts(data)
+        } catch (error) {
+            console.log(error)
         }
+    }
+    useEffect(() => {
         dataApi()
 
         if (localStorage.getItem('cartItems')) {
             setCartItems(JSON.parse(localStorage.getItem('cartItems')))
         }
+
+
     }, [])
+
 
     const addToLocalStorage = (product) => {
         // to add to localStorage
@@ -72,14 +79,14 @@ function DataStore() {
 
     }
 
+
     const handleChangeSort = (e) => {
-        const fp = products // copying products to filter
+        console.log(filteredProducts[0].name)
+        const fp = filteredProducts // copying products to filter
         const { value } = e.target
         setSorting(value)
 
-
         //convert into a switch case
-
         if (value === 'lowest') {
             fp.sort((a, b) => ((a.price - b.price)))
             setFilteredProducts(fp)
@@ -87,25 +94,48 @@ function DataStore() {
         } else if (value === 'highest') {
             fp.sort((a, b) => (b.price - a.price))
             setFilteredProducts(fp)
-
+        } else {
+            async function dataApi() {
+                let url = 'http://localhost:8000/product'
+                try {
+                    const res = await fetch(url)
+                    const data = await res.json()
+                    setFilteredProducts(data)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            dataApi()
         }
-
 
     }
 
     const handleChangeProduct = (e) => {
         setProductType(e.target.value)
+
         if (e.target.value !== 'All') {
-            console.log(productType)
+            setFilteredProducts(products)
             const newProducts = products.filter(item => item.itemType === e.target.value)
-            console.log(products.length)
             setFilteredProducts(newProducts)
-        } else {
+        }
+        else {
             setFilteredProducts(products)
         }
+    }
+    const handleSelectGender = (e) => {
 
+        const { value } = e.target
+        console.log(value)
 
-
+        if (value === 'Men') {
+            const filtered = filteredProducts.filter(item => item.gender === 'Men')
+            setFilteredProducts(filtered)
+        } else if (value === "Women") {
+            const filtered = filteredProducts.filter(item => item.gender === 'Women')
+            setFilteredProducts(filtered)
+        } else {
+            setFilteredProducts(filteredProducts)
+        }
     }
 
     const handleRemoveFromCart = (e, item) => {
@@ -114,12 +144,13 @@ function DataStore() {
         setCartItems(newCartItems)
     }
 
-    const handleSelectProduct = (e, product) => {
+    const handleSelectProduct = (product) => {
         setSelectedProduct(product)
     }
 
     return (
         <Router>
+            <Navbar cartItems={cartItems.length} />
             <Switch>
                 <Route exact path='/'>
                     <Home
@@ -131,6 +162,7 @@ function DataStore() {
                         handleChangeProduct={handleChangeProduct}
                         handleSelectProduct={handleSelectProduct}
                         handleAddToCart={handleAddToCart}
+                        handleSelectGender={handleSelectGender}
 
                     />
                 </Route>
@@ -142,7 +174,7 @@ function DataStore() {
 
                     />
                 </Route>
-                <Route exact path='/product'>
+                <Route path='/product'>
                     <Product
                         product={selectedProduct}
                         handleAddToCart={handleAddToCart} />
