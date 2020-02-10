@@ -3,7 +3,7 @@ import Products from '../ components/Products'
 import Filter from '../ components/Filter';
 
 function Home({
-    products, filteredProducts, productType, sorted, handleChangeSort, handleChangeProduct, handleSelectProduct, handleAddToCart, handleSelectGender }) {
+    products, filteredProducts, gender, productType, sorted, handleChangeSort, handleChangeProduct, handleSelectProduct, handleAddToCart, handleSelectGender }) {
     return (
         <div className="w-full px-4 mt-4">
 
@@ -17,6 +17,7 @@ function Home({
                         filteredProducts={filteredProducts}
                         products={products}
                         handleSelectGender={handleSelectGender}
+                        gender={gender}
 
                     />
                 </section>

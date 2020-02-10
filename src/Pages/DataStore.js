@@ -12,7 +12,7 @@ function DataStore() {
     const [sorting, setSorting] = useState("featured")
     const [cartItems, setCartItems] = useState([])
     const [productType, setProductType] = useState('All')
-    const [gender, SelectGender] = useState('')
+    const [gender, setGender] = useState('')
     const [selectedProduct, setSelectedProduct] = useState([])
 
 
@@ -58,7 +58,6 @@ function DataStore() {
     }
 
     const handleAddToCart = (e, product) => {
-        console.log(product)
         addToLocalStorage(product)
 
         //to add to local component state
@@ -79,21 +78,18 @@ function DataStore() {
 
     }
 
-
     const handleChangeSort = (e) => {
-        console.log(filteredProducts[0].name)
-        const fp = filteredProducts // copying products to filter
         const { value } = e.target
         setSorting(value)
 
         //convert into a switch case
         if (value === 'lowest') {
-            fp.sort((a, b) => ((a.price - b.price)))
-            setFilteredProducts(fp)
+            filteredProducts.sort((a, b) => ((a.price - b.price)))
+            setFilteredProducts(filteredProducts)
 
         } else if (value === 'highest') {
-            fp.sort((a, b) => (b.price - a.price))
-            setFilteredProducts(fp)
+            filteredProducts.sort((a, b) => (b.price - a.price))
+            setFilteredProducts(filteredProducts)
         } else {
             async function dataApi() {
                 let url = 'http://localhost:8000/product'
@@ -111,30 +107,49 @@ function DataStore() {
     }
 
     const handleChangeProduct = (e) => {
-        setProductType(e.target.value)
+        const { value } = e.target
+        setProductType(value)
 
-        if (e.target.value !== 'All') {
+        if (value !== 'All') {
             setFilteredProducts(products)
-            const newProducts = products.filter(item => item.itemType === e.target.value)
-            setFilteredProducts(newProducts)
+            if (gender !== '') {
+                const newProducts = products.filter(item => item.itemType === value & item.gender === gender)
+                setFilteredProducts(newProducts)
+
+            } else {
+                const newProducts = products.filter(item => item.itemType === value)
+                setFilteredProducts(newProducts)
+            }
         }
         else {
-            setFilteredProducts(products)
+            if (gender !== "") {
+                const newProducts = products.filter(item => item.gender === gender)
+                setFilteredProducts(newProducts)
+            } else {
+                setFilteredProducts(products)
+            }
         }
     }
     const handleSelectGender = (e) => {
 
         const { value } = e.target
-        console.log(value)
+        setGender(value)
 
         if (value === 'Men') {
-            const filtered = filteredProducts.filter(item => item.gender === 'Men')
+            setFilteredProducts(products)
+            const filtered = products.filter(item => item.gender === 'Men' & (item.itemType === productType || productType === 'All'))
             setFilteredProducts(filtered)
         } else if (value === "Women") {
-            const filtered = filteredProducts.filter(item => item.gender === 'Women')
+            setFilteredProducts(products)
+            const filtered = products.filter(item => item.gender === 'Women' & (item.itemType === productType || productType === 'All'))
             setFilteredProducts(filtered)
         } else {
-            setFilteredProducts(filteredProducts)
+            if (productType !== "All") {
+                const filtered = products.filter(item => item.itemType === productType)
+                setFilteredProducts(filtered)
+            } else {
+                setFilteredProducts(products)
+            }
         }
     }
 
@@ -163,6 +178,7 @@ function DataStore() {
                         handleSelectProduct={handleSelectProduct}
                         handleAddToCart={handleAddToCart}
                         handleSelectGender={handleSelectGender}
+                        gender={gender}
 
                     />
                 </Route>
