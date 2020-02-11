@@ -36,11 +36,18 @@ const product = products[0]
 
 function Product() {
     return (
-        <section className="flex">
-            <div className="w-2/3">
-                <img src={product.imageUrl[0]} alt={product.name} height="400" width="400" />
+        <section className=" m-auto flex">
+            <div className="w-3/5 bg-gray-300">
+                <img
+                    className="h-screen w-4/5 m-auto"
+                    src={product.imageUrl[0]} alt={product.name} />
             </div>
-            <div className="w-1/3">
+            <div className="w-2/5">
+                <b>Nike</b>
+                <h2>{product.name}</h2>
+                <h4>{product.price}</h4>
+                <h3>{product.description}</h3>
+
                 <h5>Select Size</h5>
                 <div className="max-w-xs flex flex-wrap">
                     {product.size.map(item => (
@@ -52,6 +59,19 @@ function Product() {
 
                     ))}
                 </div>
+                <div>
+                    <button>
+                        -
+                </button>
+                    <b> State for quantity</b>
+                    <button>
+                        +
+                </button>
+                    <button className="bg-yellow-300 text-red-600 ">
+                        Add to Cart
+                </button>
+                </div>
+
             </div>
         </section>
     )
