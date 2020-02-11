@@ -91,17 +91,35 @@ function DataStore() {
             filteredProducts.sort((a, b) => (b.price - a.price))
             setFilteredProducts(filteredProducts)
         } else {
-            async function dataApi() {
-                let url = 'http://localhost:8000/product'
-                try {
-                    const res = await fetch(url)
-                    const data = await res.json()
-                    setFilteredProducts(data)
-                } catch (error) {
-                    console.log(error)
+
+            if (productType === 'All' || gender === '') {
+                async function dataApi() {
+                    let url = 'http://localhost:8000/product'
+                    try {
+                        const res = await fetch(url)
+                        const data = await res.json()
+                        setFilteredProducts(data)
+                    } catch (error) {
+                        console.log(error)
+                    }
                 }
+                dataApi()
+            } else {
+                if (gender !== "" & productType !== 'All') {
+                    let newFilteredProducts = products.filter(item => item.gender === gender & item.itemType === productType)
+                    setFilteredProducts(newFilteredProducts)
+                } else if (productType !== 'All') {
+                    let newFilteredProducts = products.filter(item => item.itemType === productType)
+                    setFilteredProducts(newFilteredProducts)
+
+                } else {
+                    let newFilteredProducts = products.filter(item => item.gender === gender)
+                    setFilteredProducts(newFilteredProducts)
+
+                }
+
             }
-            dataApi()
+
         }
 
     }

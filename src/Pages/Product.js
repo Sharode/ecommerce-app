@@ -53,7 +53,6 @@ function Product() {
                     ))}
                 </div>
             </div>
-
         </section>
     )
 }
