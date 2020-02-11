@@ -1,75 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Select from 'react-select'
 // import { Link } from 'react-router-dom'
 
 
-const products = [{
-    "size": [
-        5,
-        5.5,
-        6,
-        6.5,
-        7,
-        7.5,
-        8,
-        8.5,
-        9,
-        9.5,
-        10,
-        10.5,
-        11,
-        11.5,
-        12
-    ],
-    "gender": "Women",
-    "imageUrl": [
-        "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/40b70b24-bd28-4910-899d-549ad0c2e817/vista-lite-womens-shoe-VFKnkk.jpg",
-        "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/cce3f994-b949-4d7d-917b-151bbbcac9d9/vista-lite-womens-shoe-VFKnkk.jpg",
-        "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/2f94fd49-8e65-4a2a-8af2-257c47620d07/vista-lite-womens-shoe-VFKnkk.jpg"
-    ],
-    "price": 10.99,
-    "name": "Nike Vista Lite",
-    "description": "enim corporis voluptatibus laudantium possimus alias dolorem voluptatem similique aut aliquam voluptatem voluptatem omnis id consequatur",
-    "id": 1485723766805,
-    "itemType": "shoe"
-}]
-const product = products[0]
 
-function Product() {
+
+function Product({ handleAddToCart, product }) {
+    const [size, setSize] = useState()
+
+    const handleChange = (e) => {
+        console.log(e.value)
+        setSize(e)
+    }
+
+
+    const options = product.size.map(item => ({ value: item, label: item }))
     return (
         <section className=" m-auto flex">
-            <div className="w-3/5 bg-gray-300">
+            <div className="w-3/5 bg-snkr">
                 <img
-                    className="h-screen w-4/5 m-auto"
+                    className="w-1/2 m-auto"
                     src={product.imageUrl[0]} alt={product.name} />
             </div>
-            <div className="w-2/5">
-                <b>Nike</b>
-                <h2>{product.name}</h2>
-                <h4>{product.price}</h4>
-                <h3>{product.description}</h3>
+            <div className="w-2/5 px-2">
+                <h1 className="text-lg font-thin text-center">Nike</h1>
+                <h2 className="text-center text-4xl font-bold ">{product.name}</h2>
+                <h4 className="text-center text-2xl font-bold">{product.price}</h4>
 
-                <h5>Select Size</h5>
-                <div className="max-w-xs flex flex-wrap">
-                    {product.size.map(item => (
-                        <div className="w-1/6 p-1 m-1">
-                            <div className="shadow-sm">
-                                {item}
-                            </div>
-                        </div>
+                <hr className="w-1/5 m-auto" />
+                <h3 className="text-center text-base">{product.description} </h3>
 
-                    ))}
-                </div>
+                <h5 className="text-lg font-semibold text-center ">Select Size</h5>
+
+
                 <div>
-                    <button>
-                        -
-                </button>
-                    <b> State for quantity</b>
-                    <button>
-                        +
-                </button>
-                    <button className="bg-yellow-300 text-red-600 ">
+                    <Select
+                        value={size}
+                        onChange={(e) => handleChange(e)}
+                        options={options}
+                    />
+                    <button
+                        onClick={(e) => handleAddToCart(e, product)}
+                        className="bg-yellow-300 text-red-600 ">
                         Add to Cart
-                </button>
+                    </button>
                 </div>
 
             </div>

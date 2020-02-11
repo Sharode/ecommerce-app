@@ -17,6 +17,7 @@ function DataStore() {
 
 
 
+
     const dataApi = async () => {
         let url = 'http://localhost:8000/product'
         try {
@@ -59,6 +60,7 @@ function DataStore() {
 
     const handleAddToCart = (e, product) => {
         addToLocalStorage(product)
+        console.log(product)
 
         //to add to local component state
         if (cartItems.length === 0) {
@@ -78,7 +80,16 @@ function DataStore() {
 
     }
 
+    // const handleChangeAddtoCart = (e) => {
+    //     setAddToCartForm(prevState => {
+    //         return {
+    //             ...prevState, 
+    //         }
+    //     })
+    //     console.log(e.target.value)
+    // }
     const handleChangeSort = (e) => {
+        e.preventDefault()
         const { value } = e.target
         setSorting(value)
 
@@ -204,13 +215,14 @@ function DataStore() {
                     <ShoppingCart
                         cartItems={cartItems}
                         handleRemoveFromCart={handleRemoveFromCart}
-                        handleAddToCart={handleAddToCart}
+                    // handleAddToCart={handleAddToCart}
 
                     />
                 </Route>
                 <Route path='/product'>
                     <Product
                         product={selectedProduct}
+                        // handleChange={handleChangeAddtoCart}
                         handleAddToCart={handleAddToCart} />
                 </Route>
             </Switch>
