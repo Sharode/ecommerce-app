@@ -1,33 +1,48 @@
 import React,
 { Fragment } from 'react'
 
-function ShoppingCart({ cartItems, handleAddToCart, handleRemoveFromCart }) {
-    return (
 
+
+function ShoppingCart({ cartItems, handleQuantity, handleRemoveFromCart }) {
+
+    return (
         <section className="flex max-w-screen-lg md:m-auto">
             <div className="w-2/3">
-                {cartItems.map(item => (
+                {cartItems.map(({ id, name, price, count, gender, itemType, imageUrl }) => (
                     <section className="flex my-3">
                         <div className="w-1/4">
-                            <img src={item.imageUrl[0]} height="150" width="150" alt={item.name} />
+                            <img src={imageUrl[0]} height="150" width="150" alt={name} />
                         </div>
                         <div className="w-4/5">
                             <div className="flex justify-between">
                                 <div>
-                                    {item.name}
+                                    {name}
                                 </div>
                                 <div>
-                                    ${item.price * item.count}
+                                    ${price * count}
                                 </div>
 
                             </div>
                             <div>
-                                {item.gender} {item.itemType}
+                                {gender} {itemType}
                             </div>
 
                             <button
+                                className={count === 1 && `hidden`}
+                                onClick={(e) => handleQuantity(e, id)}
+                                id="minus">
+                                Minus
+                            </button>
+
+                            <button
+                                onClick={(e) => handleQuantity(e, id)}
+                                id="plus">
+                                Plus
+                            </button>
+
+                            <button
                                 className=""
-                                onClick={(e) => handleRemoveFromCart(e, item)}>
+                                onClick={(e) => handleRemoveFromCart(e, id)}>
                                 Remove
                            </button>
                         </div>

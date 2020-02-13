@@ -182,10 +182,33 @@ function DataStore() {
         }
     }
 
-    const handleRemoveFromCart = (e, item) => {
-        const newCartItems = cartItems.filter(elem => elem.id !== item.id)
+    const handleRemoveFromCart = (e, id) => {
+        const newCartItems = cartItems.filter(elem => elem.id !== id)
         localStorage.setItem('cartItems', JSON.stringify(newCartItems))
         setCartItems(newCartItems)
+    }
+
+    const handleQuantity = (e, productId) => {
+        const { id } = e.target
+        const productItem = cartItems.filter(elem => elem.id === productId)[0]
+
+        switch (id) {
+            case 'minus':
+                productItem.count--
+                setCartItems(prevState => {
+                    localStorage.setItem('cartItems', JSON.stringify(prevState))
+                    return [...prevState]
+                })
+                break
+            case 'plus':
+                productItem.count++
+                setCartItems(prevState => {
+                    localStorage.setItem('cartItems', JSON.stringify(prevState))
+                    return [...prevState]
+                })
+                break
+        }
+
     }
 
     const handleSelectProduct = (product) => {
@@ -215,6 +238,7 @@ function DataStore() {
                     <ShoppingCart
                         cartItems={cartItems}
                         handleRemoveFromCart={handleRemoveFromCart}
+                        handleQuantity={handleQuantity}
                     // handleAddToCart={handleAddToCart}
 
                     />
