@@ -15,9 +15,6 @@ function DataStore() {
     const [gender, setGender] = useState('')
     const [selectedProduct, setSelectedProduct] = useState([])
 
-
-
-
     const dataApi = async () => {
         let url = 'http://localhost:8000/product'
         try {
@@ -80,14 +77,6 @@ function DataStore() {
 
     }
 
-    // const handleChangeAddtoCart = (e) => {
-    //     setAddToCartForm(prevState => {
-    //         return {
-    //             ...prevState, 
-    //         }
-    //     })
-    //     console.log(e.target.value)
-    // }
     const handleChangeSort = (e) => {
         e.preventDefault()
         const { value } = e.target
@@ -102,7 +91,6 @@ function DataStore() {
             filteredProducts.sort((a, b) => (b.price - a.price))
             setFilteredProducts(filteredProducts)
         } else {
-
             if (productType === 'All' || gender === '') {
                 async function dataApi() {
                     let url = 'http://localhost:8000/product'
@@ -116,7 +104,7 @@ function DataStore() {
                 }
                 dataApi()
             } else {
-                if (gender !== "" & productType !== 'All') {
+                if (gender !== "" && productType !== 'All') {
                     let newFilteredProducts = products.filter(item => item.gender === gender & item.itemType === productType)
                     setFilteredProducts(newFilteredProducts)
                 } else if (productType !== 'All') {
@@ -126,11 +114,8 @@ function DataStore() {
                 } else {
                     let newFilteredProducts = products.filter(item => item.gender === gender)
                     setFilteredProducts(newFilteredProducts)
-
                 }
-
             }
-
         }
 
     }
@@ -189,7 +174,7 @@ function DataStore() {
     }
 
     const handleQuantity = (e, productId) => {
-        const { id } = e.target
+        const { id, error } = e.target
         const productItem = cartItems.filter(elem => elem.id === productId)[0]
 
         switch (id) {
@@ -207,6 +192,8 @@ function DataStore() {
                     return [...prevState]
                 })
                 break
+            default:
+                console.log(error)
         }
 
     }
@@ -239,14 +226,12 @@ function DataStore() {
                         cartItems={cartItems}
                         handleRemoveFromCart={handleRemoveFromCart}
                         handleQuantity={handleQuantity}
-                    // handleAddToCart={handleAddToCart}
 
                     />
                 </Route>
                 <Route path='/product'>
                     <Product
                         product={selectedProduct}
-                        // handleChange={handleChangeAddtoCart}
                         handleAddToCart={handleAddToCart} />
                 </Route>
             </Switch>

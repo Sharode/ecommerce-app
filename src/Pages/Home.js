@@ -18,7 +18,6 @@ function Home({
                         products={products}
                         handleSelectGender={handleSelectGender}
                         gender={gender}
-
                     />
                 </section>
                 <section className=" w-full">

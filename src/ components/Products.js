@@ -18,12 +18,7 @@ function Products({ productItems, products, handleAddToCart, handleSelectProduct
                             </span>
 
                             <span className="font-semibold text-base mb-2">${product.price}</span>
-                            {/* <button onClick={(e) => handleAddToCart(e, product)}>
-                                add to cart
-                        </button> */}
-
                         </div>
-
                     </div>
                 </Link>
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function Filter({ count, sorts, productType, handleChangeSort, handleChangeProduct, products, filteredProducts, gender, handleSelectGender }) {
+function Filter({ sorts, productType, handleChangeSort, handleChangeProduct, gender, handleSelectGender }) {
     return (
         <div>
             <h2 className="text-lg font-semibold text-center">Filter</h2>
@@ -14,8 +14,8 @@ function Filter({ count, sorts, productType, handleChangeSort, handleChangeProdu
                             <option value="lowest">Lowest to Highest</option>
                             <option value="highest">Highest to Lowest</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                         </div>
                     </div>
                 </label>
@@ -32,8 +32,8 @@ function Filter({ count, sorts, productType, handleChangeSort, handleChangeProdu
                             <option value="Hoodie">Hoodies/SweatShirts</option>
 
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                         </div>
                     </div>
                 </label>
@@ -47,8 +47,8 @@ function Filter({ count, sorts, productType, handleChangeSort, handleChangeProdu
                             <option value="Men">Men</option>
                             <option value="Women">Women</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                         </div>
                     </div>
                 </label>
@@ -58,6 +58,9 @@ function Filter({ count, sorts, productType, handleChangeSort, handleChangeProdu
 }
 
 Filter.propTypes = {
+    sorts: PropTypes.string,
+    productType: PropTypes.string,
+    gender: PropTypes.string
 
 }
 

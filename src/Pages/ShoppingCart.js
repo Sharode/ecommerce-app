@@ -1,12 +1,13 @@
-import React,
-{ Fragment } from 'react'
+import React from 'react'
 
-
+const main = `flex max-w-screen-lg md:m-auto`
 
 function ShoppingCart({ cartItems, handleQuantity, handleRemoveFromCart }) {
 
+    const priceTotal = cartItems.map(el => el.price * el.count).reduce((accumulator, currValue) => accumulator + currValue, 0)
+
     return (
-        <section className="flex max-w-screen-lg md:m-auto">
+        <section className={main}>
             <div className="w-2/3">
                 {cartItems.map(({ id, name, price, count, gender, itemType, imageUrl }) => (
                     <section className="flex my-3">
@@ -52,6 +53,12 @@ function ShoppingCart({ cartItems, handleQuantity, handleRemoveFromCart }) {
             </div>
             <div className="w-1/3 px-8 mx-5">
                 <h1 className="text-lg">Order Summary</h1>
+                <div>Do you have a promo code </div>
+                <div> Subtotal
+                    <span>{priceTotal} </span>
+                </div>
+                <div>Estimated Shipping and Handling</div>
+                <div> Esitmated Tax <span> </span> </div>
             </div>
         </section>
     )
@@ -59,7 +66,4 @@ function ShoppingCart({ cartItems, handleQuantity, handleRemoveFromCart }) {
 
 export default ShoppingCart
 
-
-// add a size changer
-// add a quantity changer
 
